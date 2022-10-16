@@ -1,3 +1,4 @@
+//lol commenting for the hell of it
 const { SlashCommandBuilder, DiscordAPIError } = require('discord.js');
 const { rollies } = require('./functions/dice');
 const extreme = require('./arrays/extreme.js').extreme;
