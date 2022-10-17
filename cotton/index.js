@@ -1,6 +1,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { token } = require('./config.json');
+const { channelId } = require('./config.json');
 const { Client, GatewayIntentBits } = require('discord.js');
 const Discord = require("discord.js");
 const client = new Discord.Client({
@@ -38,19 +39,21 @@ for (const file of eventFiles) {
 }
 
 client.on('interactionCreate', async interaction => {
-    console.log(interaction.user.tag+" in the "+interaction.channel.name+" channel triggered an interaction.");
-    if(!interaction.isChatInputCommand()) return;
-    //First, fetch the command in the Collection with that name and assign it to command
-    const command = interaction.client.commands.get(interaction.commandName); 
-    //Then if the command doesn't exist, it will return undefined so exit early
-    if(!command) return;
-    //If it does exist
-    try {
-        await command.execute(interaction);//call the commands execute method and pass in the interaction
-    }catch (error) {// if something goes wrong, call the error
-        console.error(error);
-        await interaction.reply({content: 'There was an error while executing this command'});// and log back to the user to let them know
-    }
+    if(channelId.includes(interaction.channel.id)){
+        console.log(interaction.user.tag+" in the "+interaction.channel.name+" channel triggered an interaction.");
+        if(!interaction.isChatInputCommand()) return;
+        //First, fetch the command in the Collection with that name and assign it to command
+        const command = interaction.client.commands.get(interaction.commandName); 
+        //Then if the command doesn't exist, it will return undefined so exit early
+        if(!command) return;
+        //If it does exist
+        try {
+            await command.execute(interaction);//call the commands execute method and pass in the interaction
+        }catch (error) {// if something goes wrong, call the error
+            console.error(error);
+            await interaction.reply({content: 'There was an error while executing this command'});// and log back to the user to let them know
+        }
+    };
 });
 
 client.login(token);
