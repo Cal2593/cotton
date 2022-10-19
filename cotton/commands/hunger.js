@@ -50,7 +50,7 @@ module.exports = {
                 }
                 const movCha = levs.find(levs => levs.level === clevel).movement;
                     await interaction.reply({ content: "Your hunger level is now: " + clevel.toString() +
-                "\nThis means that you have "+movCha+"ft extra movement" });
+                    "\nThis means that you have "+movCha+"ft extra movement" });
                 break;
         }
     }
